@@ -21,7 +21,7 @@ class CrawlerPipeline(object):
 				jj = json.loads(item[k])
 				for key in used_key:
 					newdict[key] = jj[key]
-				outputStr += json.dumps(newdict, ensure_ascii=False ).encode('utf-8') +'\n'
+				outputStr += json.dumps(newdict, ensure_ascii=False ).encode("utf-8") +'\n'
 			else:
 				outputStr += item[k].replace('\n','\t') +'\n'
 		return outputStr
@@ -40,6 +40,11 @@ class CrawlerPipeline(object):
 			fout.close()
 		elif 'list' in item['url']:
 			fout = open('out/' + 'list.txt','w')
+			fout.write(self.getOutputStr(item))
+			fout.close()
+		elif 'club.jd.com' in item['url']:
+			filename = 'out/QA/'  + item['url'].split('/')[-1]+'.txt'
+			fout = open(filename,'wb')
 			fout.write(self.getOutputStr(item))
 			fout.close()
 		else:
